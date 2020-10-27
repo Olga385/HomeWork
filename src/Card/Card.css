@@ -1,0 +1,7 @@
+.card {
+    font-family: 'segoe ui', sans-serif;
+    border: 1px solid #2d2d2d;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+    flex-basis: 300px;
+    margin: 10px;
+}
