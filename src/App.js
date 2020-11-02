@@ -1,28 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import Button from './components/Button';
 import Preloader from './components/Preloader';
 
 const App = () => {
-
     const [loading, setLoading] = useState(false);
+    const [isLoggedIn, setLoggedIn] = useState(false);
 
-    const LoadingFunc = () => {
-        setLoading(!loading);
-    }
-
-    useEffect(() => {
-        if (loading) {
+    const handleLogin = () => {
+        new Promise((res) => {
+            setLoading(true);
             setTimeout(() => {
-                setLoading(false)
-            }, 3000)
-        }
-    }, [loading])
+                res();
+            }, 2000)
+        })
+            .then(() => {
+                setLoggedIn(true);
+            })
+            .finally(() => {
+                setLoading(false);
+            })
+    };
 
-    if (loading) return <Preloader />
+    const content = useMemo(() => {
+        if (loading) {
+            return (<Preloader />)
+        } else if (isLoggedIn) {
+            return (<p>Hello there!</p>);
+        } else {
+            return (<Button click={handleLogin} />)
+        }
+    }, [loading, isLoggedIn]);
 
     return (
         <>
-            <Button click={LoadingFunc} />
+            {content}
         </>
     )
 }
